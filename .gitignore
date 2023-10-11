@@ -53,7 +53,7 @@ web_modules/
 
 # Optional eslint cache
 .eslintcache
-
+.package-lock.json
 # Optional stylelint cache
 .stylelintcache
 
