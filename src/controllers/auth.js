@@ -2,11 +2,15 @@ require("dotenv").config();
 
 const express = require("express");
 const router = express.Router();
-const User = require("../models/user");
+const { User } = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const {
+  validateUserRegister,
+  validateUserLogin,
+} = require("../middlewares/validationMiddleware");
 
-router.post("/register", async (req, res) => {
+router.post("/register", validateUserRegister, async (req, res) => {
   try {
     let { name, email, password, newsPreference } = req.body;
     const hash = bcrypt.hashSync(password, 8);
@@ -24,7 +28,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", validateUserLogin, async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
